@@ -42,6 +42,8 @@ int sharrot(char **av)
 	char *token;
 	char buffer[1024] = {0};
 
+	if (!av[0])
+		return (-1);
 	if (strcmp(av[0], "exit") == 0)
 		return (-2);
 

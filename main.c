@@ -20,7 +20,7 @@ static char **_run_strtok(char **list, size_t *list_size, char *line)
 	int i;
 	size_t to_realloc;
 
-	token = strtok(line, " ");
+	token = strtok(line, " \n");
 
 	for (i = 0; token; i++)
 	{
@@ -47,7 +47,7 @@ static char **_run_strtok(char **list, size_t *list_size, char *line)
 			exit(69);
 		}
 
-		token = strtok(NULL, " ");
+		token = strtok(NULL, " \n");
 	}
 
 	list[*list_size - 1] = NULL;
@@ -55,23 +55,6 @@ static char **_run_strtok(char **list, size_t *list_size, char *line)
 	return (list);
 }
 
-/**
- * _remove_newline - removes \n at the end of a string.
- *
- * @str: string.
- */
-static void _remove_newline(char *str)
-{
-	int i;
-
-	for (i = 0; str[i]; i++)
-		;
-
-	i -= 1;
-
-	if (str[i] == '\n')
-		str[i] = ' ';
-}
 
 /**
  * main - Can work in two ways:
@@ -105,11 +88,6 @@ int main(int ac, char **av)
 	{
 		printf("%sSharrot%s$ ", YELLOW, RESET);
 		getline(&line, &len, stdin);
-
-		if (strcmp("\n", line) == 0)
-			continue;
-
-		_remove_newline(line);
 
 		list_size = 1;
 		list = realloc(list, sizeof(char *));
