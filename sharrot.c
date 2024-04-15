@@ -7,7 +7,7 @@
  *
  * @av: args.
  */
-void _run_program(char *path, char **av)
+int _run_program(char *path, char **av)
 {
 	pid_t child_pid;
 	static char *newenviron[] = { NULL };
@@ -17,17 +17,15 @@ void _run_program(char *path, char **av)
 	if (child_pid == -1)
 	{
 		perror("Error:");
-		return;
+		return -1;
 	}
 
 	if (child_pid == 0)
-	{
 		execve(path, av, newenviron);
-	}
 	else
-	{
 		wait(&status);
-	}
+
+	return (0);
 }
 
 /**
@@ -39,9 +37,18 @@ void _run_program(char *path, char **av)
  */
 int sharrot(char **av)
 {
-	char *PATH;
+	char *PATH = {0};
 	char *token;
 	char buffer[1024] = {0};
+
+	if (strcmp(av[0], "exit") == 0)
+		return (-2);
+	else
+		puts(av[0]);
+
+	sprintf(buffer, "%s", av[0]);
+	if (access(buffer, X_OK) == 0)
+		return (_run_program(buffer, av));
 
 	PATH = getenv("PATH");
 
@@ -51,12 +58,12 @@ int sharrot(char **av)
 		sprintf(buffer, "%s/%s", token, av[0]);
 		if (access(buffer, X_OK) == 0)
 		{
-			_run_program(buffer, av);
-			return (0);
+			return (_run_program(buffer, av));
 		}
 		token = strtok(NULL, ":");
 	}
 
+	perror("Command not found.");
 	return (1);
 }
 

@@ -3,7 +3,6 @@
 #define YELLOW "\033[33m"
 #define RESET "\033[0m"
 
-
 /**
  * _run_strtok - Runs main strtok.
  *
@@ -91,6 +90,7 @@ int main(int ac, char **av)
 	char **list;
 	size_t list_size;
 	int i;
+	int result;
 
 	if (ac > 1)
 	{
@@ -100,24 +100,26 @@ int main(int ac, char **av)
 		sharrot(av);
 		return (0);
 	}
-
-	printf("%sSharrot%s$ ", YELLOW, RESET);
-	getline(&line, &len, stdin);
-
-	_remove_newline(line);
-
-	list_size = 1;
 	list = malloc(sizeof(char *));
+	while (1)
+	{
+		printf("%sSharrot%s$ ", YELLOW, RESET);
+		getline(&line, &len, stdin);
 
-	list = _run_strtok(list, &list_size, line);
+		_remove_newline(line);
 
+		list_size = 1;
+		list = realloc(list, sizeof(char *));
+		list = _run_strtok(list, &list_size, line);
+
+		result = sharrot(list);
+
+		for (i = 0; list[i]; i++)
+			free(list[i]);
+		if (result == -2)
+			break;
+	}
 	free(line);
-
-	sharrot(list);
-
-	for (i = 0; list[i]; i++)
-		free(list[i]);
 	free(list);
-
 	return (0);
 }

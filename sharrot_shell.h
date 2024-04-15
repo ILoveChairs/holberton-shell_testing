@@ -21,7 +21,7 @@ unsigned int _uintlen(unsigned int);
 pid_t _getppid(void);
 
 /* sharrot.c */
-void _run_program(char *, char **);
+int _run_program(char *, char **);
 int sharrot(char **);
 
 /* main.c */
