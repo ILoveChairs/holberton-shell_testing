@@ -1,5 +1,4 @@
-#include "mini_shell.h"
-#define DEBUG
+#include "sharrot_shell.h"
 
 /**
  * read_stat - Reads the stat files and returns ppid.

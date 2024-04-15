@@ -16,7 +16,7 @@ MAGENTA := \033[35m
 PROGRAM_NAME := $(BLUE)$(BOLD)(MAKE)=>$(RESET)
 
 # Variables que podes cambiar
-DEFAULT_OUTPUT := hsh
+DEFAULT_OUTPUT := sharrot
 CFLAGS := -Wall -Werror -Wextra -pedantic -std=gnu89
 OFLAGS := 
 
