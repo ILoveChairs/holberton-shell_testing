@@ -106,6 +106,9 @@ int main(int ac, char **av)
 		printf("%sSharrot%s$ ", YELLOW, RESET);
 		getline(&line, &len, stdin);
 
+		if (strcmp("\n", line) == 0)
+			continue;
+
 		_remove_newline(line);
 
 		list_size = 1;

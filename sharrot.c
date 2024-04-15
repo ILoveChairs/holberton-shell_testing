@@ -17,7 +17,7 @@ int _run_program(char *path, char **av)
 	if (child_pid == -1)
 	{
 		perror("Error:");
-		return -1;
+		return (-1);
 	}
 
 	if (child_pid == 0)
@@ -37,32 +37,34 @@ int _run_program(char *path, char **av)
  */
 int sharrot(char **av)
 {
-	char *PATH = {0};
+	char *PATH;
+	char *PATH2;
 	char *token;
 	char buffer[1024] = {0};
 
 	if (strcmp(av[0], "exit") == 0)
 		return (-2);
-	else
-		puts(av[0]);
 
 	sprintf(buffer, "%s", av[0]);
 	if (access(buffer, X_OK) == 0)
 		return (_run_program(buffer, av));
 
-	PATH = getenv("PATH");
-
+	PATH2 = getenv("PATH");
+	PATH = malloc(_strlen(PATH2));
+	_strcpy(PATH, PATH2);
 	token = strtok(PATH, ":");
 	while (token)
 	{
 		sprintf(buffer, "%s/%s", token, av[0]);
 		if (access(buffer, X_OK) == 0)
 		{
+			free(PATH);
 			return (_run_program(buffer, av));
 		}
 		token = strtok(NULL, ":");
 	}
 
+	free(PATH);
 	perror("Command not found.");
 	return (1);
 }
