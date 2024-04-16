@@ -20,7 +20,7 @@ static char **_run_strtok(char **list, size_t *list_size, char *line)
 	int i;
 	size_t to_realloc;
 
-	token = strtok(line, " \n");
+	token = strtok(line, " \n\t");
 
 	for (i = 0; token; i++)
 	{
@@ -47,7 +47,7 @@ static char **_run_strtok(char **list, size_t *list_size, char *line)
 			exit(69);
 		}
 
-		token = strtok(NULL, " \n");
+		token = strtok(NULL, " \n\t");
 	}
 
 	list[*list_size - 1] = NULL;
@@ -70,6 +70,7 @@ int main(int ac, char **av)
 {
 	char *line = NULL;
 	size_t len;
+	ssize_t result2;
 	char **list;
 	size_t list_size;
 	int i;
@@ -87,7 +88,10 @@ int main(int ac, char **av)
 	while (1)
 	{
 		printf("%sSharrot%s$ ", YELLOW, RESET);
-		getline(&line, &len, stdin);
+		result2 = getline(&line, &len, stdin);
+
+		if (result2 == -1)
+			break;
 
 		list_size = 1;
 		list = realloc(list, sizeof(char *));

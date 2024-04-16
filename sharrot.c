@@ -5,7 +5,10 @@
 /**
  * _run_program - Runs a found program.
  *
+ * @path: path
  * @av: args.
+ *
+ * Return: int
  */
 int _run_program(char *path, char **av)
 {
@@ -54,10 +57,15 @@ int sharrot(char **av)
 	PATH2 = getenv("PATH");
 	PATH = malloc(_strlen(PATH2));
 	_strcpy(PATH, PATH2);
+	puts(PATH);
 	token = strtok(PATH, ":");
 	while (token)
 	{
-		sprintf(buffer, "%s/%s", token, av[0]);
+		if (token[_strlen(token) - 1] == '/')
+			sprintf(buffer, "%s%s", token, av[0]);
+		else
+			sprintf(buffer, "%s/%s", token, av[0]);
+		puts(buffer);
 		if (access(buffer, X_OK) == 0)
 		{
 			free(PATH);
