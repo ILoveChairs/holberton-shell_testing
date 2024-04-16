@@ -87,7 +87,7 @@ int main(int ac, char **av)
 	list = malloc(sizeof(char *));
 	while (1)
 	{
-		printf("%sSharrot%s$ ", YELLOW, RESET);
+		printf("%sShellock Holmes%s$ ", YELLOW, RESET);
 		result2 = getline(&line, &len, stdin);
 
 		if (result2 == -1)

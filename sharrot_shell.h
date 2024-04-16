@@ -20,6 +20,9 @@ unsigned int _uintlen(unsigned int);
 /* get_ppid.c */
 pid_t _getppid(void);
 
+/* getline.c */
+ssize_t _getline(char **, size_t *, FILE *);
+
 /* sharrot.c */
 int _run_program(char *, char **);
 int sharrot(char **);
